@@ -22,6 +22,7 @@
   "scripts": {
     "cypress:record": "cypress run --record",
     "cypress:run": "cypress run",
+    "cypress": "cypress open",
     "cypress:version": "cypress version",
     "cypress:verify": "cypress verify",
     "postinstall": "bower install --allow-root",
