@@ -1,5 +1,5 @@
-describe('PhoneCat Application',function(){
-      beforeEach(function(){
+describe('PhoneCat Application', () => {
+      beforeEach(() => {
         cy
         .visit('http://localhost:8000')
       })
@@ -9,17 +9,17 @@ describe('PhoneCat Application',function(){
         .hash()
         .should('eq','#!/phones')
       })
-      it('should title be right',function(){
+      it('should title be right', () => {
         cy
         .title()
         .should('eq','Google Phone Gallery')
       })
-    context('View: Phone list',function(){
-      beforeEach(function(){
+    context('View: Phone list', () => {
+      beforeEach(() => {
         cy
         .ng('model','$ctrl.query').as('q')
       })
-      it('should filter the phone list as a user types into the search box',function(){
+      it('should filter the phone list as a user types into the search box',() => {
         cy
         .get('ul.phones li').should('have.length',20)
         .get('@q').type('dell')
@@ -27,7 +27,7 @@ describe('PhoneCat Application',function(){
         .get('@q').clear().type('notorila')
         .get('ul.phones li').should('have.length',0)
 })
-      it('should control phone order via drop-down menu',function(){
+      it('should control phone order via drop-down menu', () => {
         function getNames($names) {
           return $names.map(function(index, el){
             return Cypress.$(el).text()
@@ -54,7 +54,7 @@ describe('PhoneCat Application',function(){
          .hash()
          .should('eq', '#!/phones/lg-axis')
       })
-      it('should order alphabetical',()=>{
+      it('should order alphabetical',() => {
          cy
          .ng('model', '$ctrl.orderProp')
          .select('name')
@@ -64,18 +64,20 @@ describe('PhoneCat Application',function(){
          .should('contain', 'Introducing Dell™ Streak 7')
       })
   })
-    context('Samsung',function(){
-      it('should have 5 Samsung Phones',function(){
+    context('Samsung', () => {
+      it('should have 5 Samsung Phones', () => {
         cy
-        .get('.col-md-2').find('input').type('Samsung')
-        .get('.phones').children().should('have.length',5)
+        .get('.col-md-2')
+        .find('input').type('Samsung')
+        .get('.phones')
+        .children().should('have.length',5)
       })
-      context('Samsung Gem',function(){
-        beforeEach(function(){
+      context('Samsung Gem', () => {
+        beforeEach(() => {
           cy
           .visit('http://localhost:8000/#!/phones/samsung-gem')
         })
-        it('should find Samsung Gem in search',function(){
+        it('should find Samsung Gem in search', () => {
           cy
           .visit('http://localhost:8000')
           .get('.col-md-2')
@@ -85,7 +87,7 @@ describe('PhoneCat Application',function(){
           .find('a')
           .contains('Samsung Gem™').click()
         })
-        it('should url and hash be ok',function(){
+        it('should url and hash be ok', () => {
           cy
           .url().should('eq','http://localhost:8000/#!/phones/samsung-gem')
           .hash().should('eq','#!/phones/samsung-gem')
@@ -96,7 +98,7 @@ describe('PhoneCat Application',function(){
           .children()
           .should('have.length',10)
         })
-        it.only('should change profile photo on click',() => {
+        it('should change profile photo on click', () => {
            cy
            .get('.phone-thumbs')
            .children()
@@ -111,8 +113,8 @@ describe('PhoneCat Application',function(){
         })
       })
      })
-     context('Server request',() => {
-        it('should server request be right for phone links',() => {
+     context('Server request', () => {
+        it('should server request be right for phone links', () => {
           cy
           .request('http://localhost:8000/#!/phones/motorola-atrix-4g')
           .should((response)=>{
